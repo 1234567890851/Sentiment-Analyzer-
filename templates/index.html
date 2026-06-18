@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analyzer App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .analyzer-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 24px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #34495e;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd1d9;
+            border-radius: 8px;
+            font-size: 15px;
+            resize: vertical;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            border-color: #3498db;
+        }
+
+        button {
+            width: 100%;
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .result-section {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #bdc3c7;
+            background-color: #f8f9fa;
+        }
+
+        .sentiment-Positive {
+            background-color: #e8f5e9;
+            border-left-color: #2ecc71;
+            color: #1b5e20;
+        }
+
+        .sentiment-Negative {
+            background-color: #ffebee;
+            border-left-color: #e74c3c;
+            color: #b71c1c;
+        }
+
+        .sentiment-Neutral {
+            background-color: #eceff1;
+            border-left-color: #95a5a6;
+            color: #37474f;
+        }
+
+        .token-badge {
+            display: inline-block;
+            background-color: #ffffff;
+            border: 1px solid #dcdde1;
+            padding: 4px 10px;
+            margin: 4px 2px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #2f3640;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="analyzer-card">
+        <h2>Sentiment Analyzer</h2>
+        <p class="subtitle">NLP Internship Wrap-up Project</p>
+        
+        <form method="POST" action="/">
+            <label for="text_input">Enter your statement:</label>
+            <textarea id="text_input" name="my_text" rows="4" required placeholder="Type something, e.g., 'Python is amazing for data science!'">{{ original_text }}</textarea>
+            <button type="submit">Analyze Sentiment</button>
+        </form>
+
+        {% if result %}
+        <div class="result-section sentiment-{{ result }}">
+            <h3 style="margin-top: 0; margin-bottom: 10px;">
+                Result: <span style="text-transform: uppercase;">{{ result }}</span>
+            </h3>
+            
+            <p style="margin: 5px 0; font-size: 14px;">
+                <strong>Tokens (Stopwords Removed):</strong>
+            </p>
+            
+            <div style="margin-top: 8px;">
+                {% if processed_tokens %}
+                    {% for word in processed_tokens %}
+                        <span class="token-badge">{{ word }}</span>
+                    {% endfor %}
+                {% else %}
+                    <span style="font-style: italic; font-size: 13px; color: #7f8c8d;">No key tokens found.</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
