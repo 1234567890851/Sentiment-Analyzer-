@@ -43,4 +43,8 @@ def home():
                            processed_tokens=stw, 
                            result=sentiment)
 
-app = app
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
